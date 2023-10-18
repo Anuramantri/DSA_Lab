@@ -146,7 +146,7 @@ move_t best_move(board_t board, player_t player)
                     
                     return candidate;
                 }
-                response = best_move(board, 3-player,depth);
+                response = best_move(board, 3-player);
                 board[r][c] = EMPTY;
                 if (response.score == -1)
                 {
@@ -218,7 +218,7 @@ int main()
         {   if(is_empty(board))
                 board[3][2]=current;
             else{
-            response = best_move(board, current,1);
+            response = best_move(board, current);
             int r=gravity(board,current,response.col);
             if(r!=-1)
             board[r][response.col] = current;}
