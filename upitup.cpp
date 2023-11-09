@@ -1,10 +1,12 @@
+/* A BFS solution to Martin Gardner's Up it Up (https://www.youtube.com/watch?v=N_GbBjvU068&t=1s)*/
+
 #include <cstdio>
 #include <vector>
 #include <array>
 #include <algorithm>
 #include <tuple>
 #include "queue.hpp"
-// RIGHT =2 WRONG =1 BLANK=3,4,5,6
+
 struct board {
     int e[3][3];
 };
@@ -32,7 +34,7 @@ void print_board(const board& b)
 {
     for (int r = 0; r < 3; ++r) {
         for (int c = 0; c < 3; ++c) {
-            printf("%d", b.e[r][c]);
+            printf("%d ", b.e[r][c]);
         }
         printf("\n");
     }
@@ -44,9 +46,10 @@ std::tuple<int, int> find_space(const board& b)
 {
     for (int r = 0; r < 3; ++r)
         {for (int c = 0; c < 3; ++c)
-            {if (b.e[r][c] == 0) {
+            {if (b.e[r][c] == 0) 
             return { r, c };
-            }}}
+            }}
+        assert(0);
 }
 
 int turn_side(int side, int turn) {
@@ -80,7 +83,7 @@ int turn_side(int side, int turn) {
                 case 2: side = 6; break;
                 case 3: side = 4; break;
                 case 4: side = 2; break;
-                case 5: side = 5; break;
+                case 5: side = 4; break;
                 case 6: side = 1; break;
             }
             break;
@@ -158,18 +161,18 @@ bool is_same(const board& a, const board &b)
 std::vector<int> solve(const board& src, const board& dest)
 {   
     Queue <board, SIZE> q = createQueue<board, SIZE>();
+    std::vector<board> parent;
+    parent.reserve(SIZE);
 
-    std::vector<board> parent(SIZE);
-    std::vector<int> visited(SIZE, 0);
+    std::vector<int> visited;
+    visited.reserve(SIZE);
     
     q.enqueue(src);
     visited[ord(src)] = 5;
     
     while (!q.isEmpty()) {
         board u = q.dequeue();
-    
         if (is_same(u, dest)) {
-            printf("Y");
             
             std::vector<int> moves;
             board c = u;
@@ -214,7 +217,9 @@ std::vector<int> solve(const board& src, const board& dest)
             q.enqueue(d);
         }
     }
-    assert(0);
+    printf("Unsolvable board");
+    std::vector<int> moves;
+    return moves;
 }
 
 void print_moves(const std::vector<int>& moves)
@@ -225,18 +230,22 @@ void print_moves(const std::vector<int>& moves)
         case R: printf("R "); break;
         case U: printf("U "); break;
         case D: printf("D "); break;
+        default: printf("N"); break;
         }
     }
     printf("\n");
 }
 
 int main()
-{
-    board src = {{
-        {1, 1, 1},
-        {1, 0, 1},
-        {1, 1, 1}
-    }};
+{   printf("Enter your board: \n");
+    // START SIDE = 1, EMPTY SPACE = 0, DESTINATION SIDE = 2 ;
+    board src;
+    for(int i=0;i<3;i++){
+        for(int j=0;j<3;j++){
+            scanf("%d",&src.e[i][j]);     
+        }
+    }
+    print_board(src);
     board dst = {{
         {2, 2, 2},
         {2, 0, 2},
@@ -244,6 +253,7 @@ int main()
     }};
 
     auto moves = solve(src, dst);
+    printf("The moves are: ");
     print_moves(moves);
 
     return 0;
