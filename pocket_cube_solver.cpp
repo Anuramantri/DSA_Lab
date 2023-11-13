@@ -507,7 +507,7 @@ int main(int argc, char const *argv[]) {
     // move_R2(&cube);
     // move_Fi(&cube);
     // move_Ui(&cube);
-    move_Fi(&cube);
+    // move_Fi(&cube);
     // move_F(&cube);
     // move_Ui(&cube);
     // move_R(&cube);    
@@ -520,7 +520,6 @@ int main(int argc, char const *argv[]) {
     // // Solve the Pocket Cube
     printf("Calculating moves....");
     solvePocketCube(&cube,&count);
-    printcube(&cube);
     
     return 0;
 }
