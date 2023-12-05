@@ -6,13 +6,13 @@
 #include <algorithm>
 #include <tuple>
 #include "queue.hpp"
-
+// made the board matrix
 struct board {
     int e[3][3];
 };
 
 enum move { L = 1, R = 2, U = 3, D = 4 };
-
+// finding a number for the board, (for memoisation)
 int ord(const board& b)
 {   
     int p = 1;
@@ -30,6 +30,7 @@ int ord(const board& b)
     }
 
 
+
 void print_board(const board& b)
 {
     for (int r = 0; r < 3; ++r) {
@@ -41,7 +42,7 @@ void print_board(const board& b)
     printf("\n");
 }
 
-
+// to find the empty space
 std::tuple<int, int> find_space(const board& b)
 {
     for (int r = 0; r < 3; ++r)
@@ -52,6 +53,9 @@ std::tuple<int, int> find_space(const board& b)
         assert(0);
 }
 
+/*       3   
+    6    1  4   2
+         5*/
 int turn_side(int side, int turn) {
     
     switch (turn) {
@@ -60,9 +64,9 @@ int turn_side(int side, int turn) {
                 case 1: side = 3; break;
                 case 2: side = 5; break;
                 case 3: side = 2; break;
-                case 4: side = 3; break;
+                case 4: side = 4; break;
                 case 5: side = 1; break;
-                case 6: side = 3; break;
+                case 6: side = 6; break;
             }
             break;  
         case D:
@@ -71,9 +75,9 @@ int turn_side(int side, int turn) {
                 case 1: side = 5; break;
                 case 2: side = 3; break;
                 case 3: side = 1; break;
-                case 4: side = 5; break;
+                case 4: side = 4; break;
                 case 5: side = 2; break;
-                case 6: side = 5; break;
+                case 6: side = 6; break;
             }
             break;
         case R:
@@ -81,9 +85,9 @@ int turn_side(int side, int turn) {
             switch (side) {
                 case 1: side = 4; break;
                 case 2: side = 6; break;
-                case 3: side = 4; break;
+                case 3: side = 3; break;
                 case 4: side = 2; break;
-                case 5: side = 4; break;
+                case 5: side = 5; break;
                 case 6: side = 1; break;
             }
             break;
@@ -92,9 +96,9 @@ int turn_side(int side, int turn) {
             switch (side) {
                 case 1: side = 6; break;
                 case 2: side = 4; break;
-                case 3: side = 6; break;
+                case 3: side = 3; break;
                 case 4: side = 1; break;
-                case 5: side = 6; break;
+                case 5: side = 5; break;
                 case 6: side = 2; break;
                 
             }
@@ -156,7 +160,7 @@ bool is_same(const board& a, const board &b)
     return true;
 }
 
-#define SIZE 40353607
+#define SIZE 40353607 // 7**9
 
 std::vector<int> solve(const board& src, const board& dest)
 {   
